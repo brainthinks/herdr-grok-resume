@@ -22,7 +22,7 @@ Start Grok inside a Herdr pane after installing. A session that is already runni
 
 ## What a reboot does
 
-While Grok is running in a Herdr pane, the hook stores the session id and folder on that pane. Quitting Grok clears the mark, so a quit stays quit. If the machine reboots, or herdr-core stops, the pane's new shell runs `grok --resume` in the saved folder.
+While Grok is running in a Herdr pane, the hook stores the session id and folder on that pane. Quitting Grok clears the mark, so a quit stays quit. If the machine reboots, or herdr-core stops, the pane's new shell runs `grok --resume` in the saved folder. The shell turns job control on first, so Grok is the foreground program and Herdr keeps it in the agents list.
 
 ## Limits
 

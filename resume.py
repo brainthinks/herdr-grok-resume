@@ -149,7 +149,10 @@ def decide(
 
 
 def resume_command(session_id: str, cwd: str) -> str:
-    return f"cd {shlex.quote(cwd)} && grok --resume {shlex.quote(session_id)}"
+    # set -m puts Grok in its own foreground process group. Without that, Herdr
+    # treats bash as the foreground program and clears the agent's status, so
+    # the agents list never keeps the session.
+    return f"set -m; cd {shlex.quote(cwd)} && grok --resume {shlex.quote(session_id)}"
 
 
 def cmd_note(event: dict) -> int:
@@ -343,7 +346,7 @@ def selftest() -> int:
         == labels[LABEL_SESSION]
     )
     command = resume_command("abc", "/tmp/a b")
-    assert command == "cd '/tmp/a b' && grok --resume abc"
+    assert command == "set -m; cd '/tmp/a b' && grok --resume abc"
     print("ok")
     return 0
 
