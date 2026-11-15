@@ -1,0 +1,12 @@
+# >>> herdr grok resume >>>
+# After a reboot, Herdr restores this pane as a shell. Start the Grok session
+# that was running here. No-op in any other terminal.
+if [[ -n ${HC_TERMINAL_ID:-} && -z ${GROK_HERDR_RESUME_CHECKED:-} ]]; then
+  export GROK_HERDR_RESUME_CHECKED=1
+  __grok_herdr_line=$(python3 "$HOME/.config/herdr-app/grok-resume/resume.py" here) || __grok_herdr_line=
+  if [[ -n ${__grok_herdr_line:-} ]]; then
+    eval "$__grok_herdr_line"
+  fi
+  unset __grok_herdr_line
+fi
+# <<< herdr grok resume <<<
